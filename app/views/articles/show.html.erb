@@ -1,4 +1,5 @@
 <h1><%= @article.name %></h1>
+<%= link_to "Añadir imagen", new_article_image_path(@article) %><br/>
 <%= link_to "Editar", edit_article_path(@article) %><br/>
 <%= link_to "Eliminar", article_path(@article), method: :delete, data: {confirm: 
 "¿Seguro de que quieres eliminar?"} %><br/>
@@ -6,4 +7,8 @@
 
 <% if @article.main_image %>
     <%= image_tag "data:image/jpeg;base64," + @article.main_image %>
+<% end %>
+
+<%= @article.images.each do |image| %>
+    <%= image_tag "data:image/jpeg;base64," + image.image %>
 <% end %>
