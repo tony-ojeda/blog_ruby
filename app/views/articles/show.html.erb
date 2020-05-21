@@ -1,5 +1,7 @@
 <h1><%= @article.name %></h1>
-
+<%= link_to "Editar", edit_article_path(@article) %><br/>
 <p><%= @article.content %></p>
 
-<%= image_tag "data:image/jpeg;base64," + @article.main_image %>
+<% if @article.main_image %>
+    <%= image_tag "data:image/jpeg;base64," + @article.main_image %>
+<% end %>
