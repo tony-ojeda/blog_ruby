@@ -1,5 +1,7 @@
 <h1><%= @article.name %></h1>
 <%= link_to "Editar", edit_article_path(@article) %><br/>
+<%= link_to "Eliminar", article_path(@article), method: :delete, data: {confirm: 
+"¿Seguro de que quieres eliminar?"} %><br/>
 <p><%= @article.content %></p>
 
 <% if @article.main_image %>
