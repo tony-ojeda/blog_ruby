@@ -12,6 +12,7 @@
 <% if @article.images %>
     <% @article.images.each do |image| %>
         <%= image_tag "data:image/jpeg;base64," + image.image %> 
-        <%= link_to "Cambiar Imagen", edit_article_image_path(@article, image) %><br/>
+        <%= link_to "Cambiar Imagen", edit_article_image_path(@article, image) %> | 
+        <%= link_to "Eliminar Imagen", article_image_path(@article, image), method: :delete, data: {confirm:"¿Seguro de que quieres eliminar?"} %> <br/>
     <% end %>
 <% end %>

@@ -10,6 +10,13 @@ class ImagesController < ApplicationController
         @image = @article.images.find(params[:id])
     end
 
+    def destroy
+        @article = Article.find(params[:article_id])
+        @image = @article.images.find(params[:id])
+        @image.destroy
+        redirect_to articles_path
+    end
+
     def update 
         @article = Article.find(params[:article_id])
         @image = @article.images.find(params[:id])
