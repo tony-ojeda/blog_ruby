@@ -9,6 +9,9 @@
     <%= image_tag "data:image/jpeg;base64," + @article.main_image %>
 <% end %>
 
-<%= @article.images.each do |image| %>
-    <%= image_tag "data:image/jpeg;base64," + image.image %>
+<% if @article.images %>
+    <% @article.images.each do |image| %>
+        <%= image_tag "data:image/jpeg;base64," + image.image %> 
+        <%= link_to "Cambiar Imagen", edit_article_image_path(@article, image) %><br/>
+    <% end %>
 <% end %>
