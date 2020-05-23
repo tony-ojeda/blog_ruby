@@ -1,4 +1,4 @@
-<h1><%= @article.name %></h1>
+<h1 class="text-5xl mb-2"><%= @article.name %></h1>
 <% if admin_signed_in? %>
     <%= link_to "Añadir imagen", new_article_image_path(@article) %><br/>
     <%= link_to "Editar", edit_article_path(@article) %><br/>
