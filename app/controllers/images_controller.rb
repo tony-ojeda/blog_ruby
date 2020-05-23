@@ -1,25 +1,20 @@
 require 'base64'
 class ImagesController < ApplicationController
+    before_action :set_article
+    before_action :set_image, only: [:edit, :update, :destroy]
     def new
-        @article = Article.find(params[:article_id])
         @image = @article.images.build
     end
 
     def edit
-        @article = Article.find(params[:article_id])
-        @image = @article.images.find(params[:id])
     end
 
     def destroy
-        @article = Article.find(params[:article_id])
-        @image = @article.images.find(params[:id])
         @image.destroy
         redirect_to articles_path
     end
 
     def update 
-        @article = Article.find(params[:article_id])
-        @image = @article.images.find(params[:id])
         image = params[:image][:image]
         
         if @image.update_attributes(image: Base64.encode64(image.read))
@@ -30,7 +25,6 @@ class ImagesController < ApplicationController
     end
 
     def create
-        @article = Article.find(params[:article_id])
         @image = @article.images.build(image_params)
         image = params[:image][:image]
         @image.image = Base64.encode64(image.read)
@@ -45,5 +39,13 @@ class ImagesController < ApplicationController
         def image_params
             params.require(:image).permit(:image)
         end
+
+        def set_article
+            @article = Article.find(params[:article_id])
+        end
+
+        def set_image
+            @image = @article.images.find(params[:id])
+        end 
 
 end

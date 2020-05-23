@@ -1,5 +1,6 @@
 require 'base64'
 class ArticlesController < ApplicationController
+    before_action :set_article, only: [:edit, :show, :update, :destroy]
     def index
         @articles = Article.all
     end
@@ -10,40 +11,42 @@ class ArticlesController < ApplicationController
 
     def create
         @article = Article.new(article_params)
-        main_image = params[:article][:main_image]
-        @article.main_image = Base64.encode64(main_image.read)
+        if (params[:article][:main_image]) 
+            main_image = params[:article][:main_image]
+            @article.main_image = Base64.encode64(main_image.read)
+        end
         if @article.save
+            flash[:notice] = "Se guardó el artículo conrrectamente."
             redirect_to @article
         else
+            flash[:error] = "No se pudo guardar. Los campos de nombre y contenido deben de estar llenos."
             render action: "new"
         end
     end
 
     def edit
-        @article = Article.find(params[:id])
     end
 
     def show 
-        @article = Article.find(params[:id])
     end
 
     def destroy
-        @article = Article.find(params[:id]) 
         @article.destroy
         redirect_to articles_path
     end
 
     def update
-        @article = Article.find(params[:id])
         
         if @article.update(article_params)
             if params[:article][:main_image]
                 main_image = params[:article][:main_image]
                 @article.main_image = Base64.encode64(main_image.read)
             end
+            flash[:notice] = "Se guardó el artículo conrrectamente."
             @article.update_attributes(main_image: main_image)
             redirect_to @article
         else
+            flash[:error] = "No se pudo guardar. Los campos de nombre y contenido deben de estar llenos."
             render action: "edit"
         end
     end
@@ -51,5 +54,9 @@ class ArticlesController < ApplicationController
     private
         def article_params
             params.require(:article).permit(:name, :content, :main_image)
+        end
+
+        def set_article
+            @article = Article.find(params[:id])
         end
 end
