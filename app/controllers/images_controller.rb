@@ -1,5 +1,6 @@
 require 'base64'
 class ImagesController < ApplicationController
+    before_action :authenticate_admin!
     before_action :set_article
     before_action :set_image, only: [:edit, :update, :destroy]
     def new

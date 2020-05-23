@@ -1,4 +1,6 @@
-<%= link_to "Nuevo Artículo", new_article_path %>
+<% if admin_signed_in? %>
+    <%= link_to "Nuevo Artículo", new_article_path %>
+<% end %>
 
 <% @articles.each do |article| %>
     <%= link_to article.name, article %><br/>

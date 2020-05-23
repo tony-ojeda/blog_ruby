@@ -1,5 +1,6 @@
 require 'base64'
 class ArticlesController < ApplicationController
+    before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
     before_action :set_article, only: [:edit, :show, :update, :destroy]
     def index
         @articles = Article.all

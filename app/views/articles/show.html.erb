@@ -1,8 +1,10 @@
 <h1><%= @article.name %></h1>
-<%= link_to "Añadir imagen", new_article_image_path(@article) %><br/>
-<%= link_to "Editar", edit_article_path(@article) %><br/>
-<%= link_to "Eliminar", article_path(@article), method: :delete, data: {confirm: 
-"¿Seguro de que quieres eliminar?"} %><br/>
+<% if admin_signed_in? %>
+    <%= link_to "Añadir imagen", new_article_image_path(@article) %><br/>
+    <%= link_to "Editar", edit_article_path(@article) %><br/>
+    <%= link_to "Eliminar", article_path(@article), method: :delete, data: {confirm: 
+    "¿Seguro de que quieres eliminar?"} %><br/>
+<% end %>
 <p><%= @article.content %></p>
 
 <% if @article.main_image %>
@@ -12,7 +14,9 @@
 <% if @article.images %>
     <% @article.images.each do |image| %>
         <%= image_tag "data:image/jpeg;base64," + image.image %> 
-        <%= link_to "Cambiar Imagen", edit_article_image_path(@article, image) %> | 
-        <%= link_to "Eliminar Imagen", article_image_path(@article, image), method: :delete, data: {confirm:"¿Seguro de que quieres eliminar?"} %> <br/>
+        <% if admin_signed_in? %>
+            <%= link_to "Cambiar Imagen", edit_article_image_path(@article, image) %> | 
+            <%= link_to "Eliminar Imagen", article_image_path(@article, image), method: :delete, data: {confirm:"¿Seguro de que quieres eliminar?"} %> <br/>
+        <% end %>
     <% end %>
 <% end %>
